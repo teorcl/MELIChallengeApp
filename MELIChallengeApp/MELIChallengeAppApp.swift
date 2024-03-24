@@ -11,7 +11,8 @@ import SwiftUI
 struct MELIChallengeAppApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            //ContentView()
+            ProductListFactory.createVistaDePrueba()
         }
     }
 }

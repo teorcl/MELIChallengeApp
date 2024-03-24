@@ -9,22 +9,33 @@ import SwiftUI
 import Kingfisher
 
 struct ProductDetailView: View {
-    let product: Produc
     
-    @State private var zoomed: Bool = false
+    let product: ProductListPresentableItem
     
     var body: some View {
-        VStack {
-            KFImage(URL(string: product.imageUrl))
-                .resizable().aspectRatio(contentMode: zoomed ? .fill : .fit)
-                .onTapGesture {
-                    withAnimation {
-                        zoomed.toggle()
+        let screenHeight = UIScreen.main.bounds.height
+        ScrollView {
+            VStack {
+                KFImage(URL(string: product.thumbnail))
+                    .placeholder{
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(
+                                tint: Color("ColorAccent")
+                                )
+                            )
                     }
-                }
-            Text(product.title)
-            Text(String(format: "%.1f$", product.price))
-        }.navigationBarTitle(Text(product.title), displayMode: .inline)
+                    .resizable()
+                    .scaledToFit()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: screenHeight * 0.5)
+//                Carousel(imageUrls: product.images)
+//                    .frame(height: screenHeight * 0.5)
+                Text(product.title)
+                Text(String(format: "$ %.1f", product.price))
+                Spacer()
+            }.navigationBarTitle(Text(product.title), displayMode: .inline)
+        }
+        
     }
 }
 
