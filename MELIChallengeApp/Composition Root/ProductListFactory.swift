@@ -13,7 +13,14 @@ class ProductListFactory {
     }
     
     private static func createViewModel() -> ProductViewModel {
-        return ProductViewModel(getProductsUseCase: createUseCase())
+        return ProductViewModel(
+            getProductsUseCase: createUseCase(),
+            getProductDetailUseCase: createGetProductDetailUseCase()
+        )
+    }
+    
+    private static func createGetProductDetailUseCase() -> GetProductDetailProtocol {
+        return GetProductDetail(repository: createRepository())
     }
     
     private static func createUseCase() -> GetProductListProtocol {

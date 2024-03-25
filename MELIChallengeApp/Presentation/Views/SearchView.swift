@@ -41,8 +41,10 @@ struct SearchView: View {
                 List {
                     ForEach(viewModel.productsPresentable, id: \.title) {productRepresentable in
                         
-                        NavigationLink(destination: ProductDetailView(product: productRepresentable)){
+                        NavigationLink(destination: ProductDetailView(product: productRepresentable, viewModel: self.viewModel)){
                             RowView(product: productRepresentable)
+                        }.onAppear(){
+                            viewModel.fetchProduct(id: productRepresentable.id)
                         }
                     }
                 }.toolbar{

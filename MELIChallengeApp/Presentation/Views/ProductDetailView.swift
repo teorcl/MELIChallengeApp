@@ -11,29 +11,25 @@ import Kingfisher
 struct ProductDetailView: View {
     
     let product: ProductListPresentableItem
+    @ObservedObject  var viewModel: ProductViewModel
     
     var body: some View {
         let screenHeight = UIScreen.main.bounds.height
         ScrollView {
             VStack {
-                KFImage(URL(string: product.thumbnail))
-                    .placeholder{
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(
-                                tint: Color.yellow
-                                )
-                            )
-                    }
-                    .resizable()
-                    .scaledToFit()
-                    .aspectRatio(contentMode: .fit)
+                Carousel(imageUrls: viewModel.productDetailPresentable!.pictures.map({ picture in
+                    picture.secureUrl
+                }))
                     .frame(height: screenHeight * 0.5)
-//                Carousel(imageUrls: product.images)
-//                    .frame(height: screenHeight * 0.5)
-                Text(product.title)
-                Text(product.price)
+                Text(viewModel.productDetailPresentable!.title)
+                Text(viewModel.productDetailPresentable!.price)
+                Text("Moneda: \(viewModel.productDetailPresentable!.currencyId)")
+                Text("Cantidad: \(viewModel.productDetailPresentable!.initialQuantity)")
+                Text("Condición: \(viewModel.productDetailPresentable!.condition)")
+                Text("Estado: \(viewModel.productDetailPresentable!.status)")
                 Spacer()
             }.navigationBarTitle(Text(product.title), displayMode: .inline)
+                
         }
         
     }

@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol GetProductDeatilProtocol {
+protocol GetProductDetailProtocol {
     func byId(_ id: String) async -> Result<ProductDetail, ProductDomainError>
 }
 
-class GetProductDetail: GetProductDeatilProtocol {
+class GetProductDetail: GetProductDetailProtocol {
     
     private let repository: ProductRepository
     
