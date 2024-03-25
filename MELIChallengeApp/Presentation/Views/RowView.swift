@@ -16,16 +16,6 @@ struct RowView: View {
     
     var body: some View {
         HStack {
-            //KFImage(URL(string: product.thumbnail))
-//            KFImage(URL(string: product.thumbnail))
-//                .placeholder{
-//                    ProgressView()
-//                        .progressViewStyle(CircularProgressViewStyle(tint: Color("ColorAccent")))
-//                }
-//                .resizable()
-//                .frame(width: 120, height: 120)
-//                .cornerRadius(10)
-            
             AsyncImage(url: URL(string: product.thumbnail)) { image in
                 image
                     .resizable()
@@ -34,14 +24,19 @@ struct RowView: View {
                     .frame(width: 120, height: 120)
                     .cornerRadius(10)
             } placeholder: {
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle(tint: Color.yellow))
+                KFImage(URL(string: "https://i.gifer.com/ZKZg.gif")
+                ).resizable()
+                    .scaledToFit()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 120, height: 120)
+                    .cornerRadius(10)
+                
             }
                 
             
             VStack(alignment: .leading, content: {
                 Text(product.title)
-                Text(String(format: "$ %.1f", product.price))
+                Text(product.price)
             })
             
             Spacer()

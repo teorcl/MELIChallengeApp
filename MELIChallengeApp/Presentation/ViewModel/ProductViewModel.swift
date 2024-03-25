@@ -11,41 +11,15 @@ import Foundation
 struct ProductListPresentableItem {
     let id: String
     let title: String
-    let condition: String
-    let thumbnail: String // Imagen miniatura para
+    let thumbnail: String
     let price: String
-    let availableQuantity: String
-    let installments: Installments //Coutas
-    let pictures: [Picture]
-    
-    struct Picture {
-        let url: String
-        let size: String
-    }
-    
-    struct Installments {
-        let quantity: String
-        let amount: String
-        let currencyId: String
-        
-    }
     
     init(domainModel: Product){
         self.id = domainModel.id
         self.title = domainModel.title
-        self.condition = domainModel.condition
         self.thumbnail = ProductListPresentableItem.convertHTTPToHTTPS(urlString: domainModel.thumbnail) ?? "https://static.vecteezy.com/system/resources/previews/005/337/799/non_2x/icon-image-not-found-free-vector.jpg"
         self.price = "$ \(domainModel.price)"
-        self.availableQuantity =  "\(domainModel.availableQuantity)"
-        self.installments = Installments(
-            quantity: "\(domainModel.installments.quantity)",
-            amount: "\(domainModel.installments.amount)",
-            currencyId: domainModel.installments.currencyId
-        )
-        self.pictures = domainModel.pictures.map({ item in
-            Picture(url: item.url, size: item.size)
-        }
-        )
+        
     }
     
     static func convertHTTPToHTTPS(urlString: String) -> String? {

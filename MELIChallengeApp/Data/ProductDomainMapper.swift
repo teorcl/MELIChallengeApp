@@ -14,11 +14,8 @@ class ProductDomainMapper {
             return ProductBuilder(
                 id: dataDTO.id,
                 title: dataDTO.title,
-                condition: dataDTO.condition,
                 thumbnail: dataDTO.thumbnail,
-                price: dataDTO.price,
-                availableQuantity: dataDTO.availableQuantity,
-                installments: dataDTO.installments ?? Installments(quantity: 0, amount: 0, currencyId: "COP")
+                price: dataDTO.price
             )
         }
         

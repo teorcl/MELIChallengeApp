@@ -31,7 +31,7 @@ struct ProductDetailView: View {
 //                Carousel(imageUrls: product.images)
 //                    .frame(height: screenHeight * 0.5)
                 Text(product.title)
-                Text(String(format: "$ %.1f", product.price))
+                Text(product.price)
                 Spacer()
             }.navigationBarTitle(Text(product.title), displayMode: .inline)
         }
