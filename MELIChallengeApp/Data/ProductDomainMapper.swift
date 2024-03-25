@@ -23,4 +23,18 @@ class ProductDomainMapper {
             return productBuilder.build()
         })
     }
+    
+    func map(data: ProductDetailDTO) -> ProductDetail {
+        return ProductDetail(
+            title: data.title,
+            price: data.price,
+            currencyId: data.currencyId,
+            initialQuantity: data.initialQuantity,
+            condition: data.condition,
+            pictures: data.pictures.map({ picture in
+                ProductDetail.Picture(url: picture.url, secureUrl: picture.secureUrl)
+            }),
+            status: data.status
+        )
+    }
 }

@@ -9,7 +9,7 @@ import Foundation
 
 protocol ProductRemoteDataSource {
     func getProductList(byTitle title: String) async -> Result<ResultsDTO, HTTPClientError>
-    //func getProductPictures( proudctId: String) async -> Result<[PictureDTO], HTTPClientError>
+    func getProduct( proudctId: String) async -> Result<ProductDetailDTO, HTTPClientError>
 }
 
 class ProductRemoteDataSourceImpl: ProductRemoteDataSource {
@@ -44,9 +44,24 @@ class ProductRemoteDataSourceImpl: ProductRemoteDataSource {
         return .success(productResults)
     }
     
-    /*func getProductPictures(proudctId: String) async -> Result<[PictureDTO], HTTPClientError> {
-        <#code#>
-    }*/
+    func getProduct( proudctId: String) async -> Result<ProductDetailDTO, HTTPClientError> {
+        let endpoint = Endpoint(
+            path: "items/\(proudctId)",
+            queryParamters: [:],
+            method: .get
+        )
+        let result = await httpClient.makeRequest(urlBase: MLApi.baseURL.rawValue, endpoint: endpoint) 
+        guard case .success(let data) = result else {
+            let error = result.failureValue as? HTTPClientError
+            return .failure(handleError(error: error))
+        }
+        
+        guard let productDetail = try? JSONDecoder().decode(ProductDetailDTO.self, from: data) else {
+            return .failure(.parsingError)
+        }
+        
+        return .success(productDetail)
+    }
     
     private func handleError(error: HTTPClientError?) -> HTTPClientError {
         guard let error = error else { return .generic }

@@ -9,6 +9,6 @@ import Foundation
 
 protocol ProductRepository {
     func getProductList(_ title: String) async -> Result<[Product], ProductDomainError>
-    // Poner el de obtener la imagen
+    func getProduct(byId id: String) async -> Result<ProductDetail,ProductDomainError>
 }
 

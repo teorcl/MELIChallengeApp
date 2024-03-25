@@ -37,4 +37,18 @@ class ProductRepositoryImpl: ProductRepository {
         
         return .success(productDomainMapper.map(data: baseProducList))
     }
+    
+    func getProduct(byId id: String) async -> Result<ProductDetail, ProductDomainError> {
+        let productDetailResult = await dataSource.getProduct(proudctId: id)
+        
+        guard let productDetail = try? productDetailResult.get() else {
+            guard case .failure(let failure) = productDetailResult else {
+                return .failure(.generic)
+            }
+            
+            return .failure(errorMapper.map(error: failure))
+
+        }
+        return .success(productDomainMapper.map(data: productDetail))
+    }
 }
