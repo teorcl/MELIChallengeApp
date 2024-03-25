@@ -8,8 +8,8 @@
 import Foundation
 class ProductListFactory {
     
-    static func createVistaDePrueba() -> VistaDePrueba {
-        return VistaDePrueba(viewModel: createViewModel())
+    static func createSearchView() -> SearchView {
+        return SearchView(viewModel: createViewModel())
     }
     
     private static func createViewModel() -> ProductViewModel {

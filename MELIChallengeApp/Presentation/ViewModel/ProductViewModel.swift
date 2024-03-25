@@ -34,7 +34,7 @@ struct ProductListPresentableItem {
         self.id = domainModel.id
         self.title = domainModel.title
         self.condition = domainModel.condition
-        self.thumbnail = ProductListPresentableItem.convertHTTPToHTTPS(urlString: domainModel.thumbnail)!
+        self.thumbnail = ProductListPresentableItem.convertHTTPToHTTPS(urlString: domainModel.thumbnail) ?? "https://static.vecteezy.com/system/resources/previews/005/337/799/non_2x/icon-image-not-found-free-vector.jpg"
         self.price = "$ \(domainModel.price)"
         self.availableQuantity =  "\(domainModel.availableQuantity)"
         self.installments = Installments(
@@ -62,32 +62,32 @@ class ProductViewModel: ObservableObject {
     //MARK: - Use case
     private let getProductsUseCase: GetProductListProtocol
     @Published var productsPresentable: [ProductListPresentableItem] = []
-    private let title: String = "sapo" // AJUSTAR
+    @Published var showAlert: Bool = false
+    @Published var isLoading: Bool = false
     
     init(getProductsUseCase:GetProductListProtocol){
         self.getProductsUseCase = getProductsUseCase
     }
     
-    func onAppear() {
-        Task{
+    func search(product title: String){
+        isLoading = true
+        Task {
             let result = await getProductsUseCase.byTitle(title)
-            
             guard case .success(let productsObtained) = result else {
                 handleError(error: result.failureValue as? ProductDomainError)
                 return
             }
-            
-            
-            
+        
             
             Task { @MainActor in
+                isLoading = false
                 //Convierto la lista de Entity a Porductos representables
                 productsPresentable = productsObtained.map({ productObtained in
                     return ProductListPresentableItem(domainModel: productObtained)
                 })
             }
-           
         }
+        
     }
     
     private func handleError(error: ProductDomainError?) {

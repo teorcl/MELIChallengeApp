@@ -35,10 +35,6 @@ class ProductRepositoryImpl: ProductRepository {
 
         }
         
-        baseProducList.results.forEach { pDTO in
-            print(pDTO.thumbnail)
-        }
-        
         return .success(productDomainMapper.map(data: baseProducList))
     }
 }

@@ -20,7 +20,7 @@ struct ProductDetailView: View {
                     .placeholder{
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle(
-                                tint: Color("ColorAccent")
+                                tint: Color.yellow
                                 )
                             )
                     }

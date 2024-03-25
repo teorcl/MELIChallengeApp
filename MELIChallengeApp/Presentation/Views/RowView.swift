@@ -35,7 +35,7 @@ struct RowView: View {
                     .cornerRadius(10)
             } placeholder: {
                 ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle(tint: Color("ColorAccent")))
+                    .progressViewStyle(CircularProgressViewStyle(tint: Color.yellow))
             }
                 
             

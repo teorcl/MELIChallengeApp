@@ -12,7 +12,7 @@ struct MELIChallengeAppApp: App {
     var body: some Scene {
         WindowGroup {
             //ContentView()
-            ProductListFactory.createVistaDePrueba()
+            ProductListFactory.createSearchView()
         }
     }
 }

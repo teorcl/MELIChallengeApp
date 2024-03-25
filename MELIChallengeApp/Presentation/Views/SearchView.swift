@@ -8,36 +8,59 @@
 import SwiftUI
 
 struct SearchView: View {
-    
+    @ObservedObject  var viewModel: ProductViewModel
     @State private var searchText = ""
-    @State private var isSearching = false
+    @State private var showingPopup = false
+    @State var isPresented: Bool = false
+    
+    init(viewModel: ProductViewModel) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
-        NavigationView {
-            VStack {
-                                TextField("Buscar productos", text: $searchText)
-                                    .padding(.leading, 20)
-                                    .padding(.vertical, 10)
-                                    .padding(.trailing, 20)
-                                    .background(Color(.systemGray6))
-                                    .cornerRadius(8)
-                                    .padding(.horizontal, 15)
-                                
-                                Button(action: {
-                                    // Aquí podrías ejecutar la búsqueda según el texto ingresado
-                                    // Por ahora, simplemente navegamos a la lista de productos
-                                    self.isSearching = true
-                                }) {
-                                    Text("Buscar")
-                                        .padding(.trailing, 20)
-                                }
-                            }
-                            .padding(.bottom, 10)
+        VStack {
+            TextField("Ingrese una URL", text: $searchText)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
             
-        }
+            Button {
+                isPresented = true
+            } label: {
+                Label("Buscar", systemImage: "line.diagonal.arrow")
+                    .font(.headline)
+                    .foregroundStyle(.white)
+                    .padding()
+                    .background(Color.yellow)
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+            }
+            
+            
+            Spacer()
+        }.fullScreenCover(isPresented: $isPresented, onDismiss: {isPresented = false}, content: {
+            NavigationView {
+                List {
+                    ForEach(viewModel.productsPresentable, id: \.title) {productRepresentable in
+                        
+                        NavigationLink(destination: ProductDetailView(product: productRepresentable)){
+                            RowView(product: productRepresentable)
+                        }
+                    }
+                }.toolbar{
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button {
+                            isPresented = false
+                            searchText = ""
+                        } label: {
+                            Label("Volver", systemImage: "chevron.backward")
+                        }
+                        
+                    }
+                }
+                .navigationTitle("Productos")
+                .navigationBarTitleDisplayMode(.inline)
+            }.onAppear{
+                viewModel.search(product: searchText)
+            }
+        })
     }
-}
-
-#Preview {
-    SearchView()
 }
