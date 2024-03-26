@@ -30,7 +30,7 @@ struct ProductDetailView: View {
                 Spacer()
             }.navigationBarTitle(Text(product.title), displayMode: .inline)
                 
-        }
+        }.padding(10)
         
     }
 }

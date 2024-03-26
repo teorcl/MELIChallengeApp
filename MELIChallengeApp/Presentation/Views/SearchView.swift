@@ -20,7 +20,6 @@ struct SearchView: View {
     var body: some View {
         VStack {
             Spacer()
-            
             TextField("Producto", text: $searchText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
@@ -36,21 +35,15 @@ struct SearchView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 16))
             }
             
-            
             Spacer()
-            
             
         }.fullScreenCover(isPresented: $isPresented, onDismiss: {isPresented = false}, content: {
             NavigationView {
                 if viewModel.isLoading {
-                    ProgressView()
-                        .controlSize(.extraLarge)
-                        .progressViewStyle(CircularProgressViewStyle(tint: .yellow))
-                        .padding()
-                        .background(Color.white.opacity(0.7))
+                    CustomProgressView()
                 }
                 List {
-                    ForEach(viewModel.productsPresentable, id: \.title) {productRepresentable in
+                    ForEach(viewModel.productsPresentable, id: \.title) { productRepresentable in
                         
                         NavigationLink(destination: ProductDetailView(product: productRepresentable, viewModel: self.viewModel)){
                             RowView(product: productRepresentable)

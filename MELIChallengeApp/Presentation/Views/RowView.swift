@@ -33,7 +33,6 @@ struct RowView: View {
                 
             }
                 
-            
             VStack(alignment: .leading, content: {
                 Text(product.title)
                 Text(product.price)
