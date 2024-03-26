@@ -31,13 +31,15 @@ struct SearchView: View {
                     .font(.headline)
                     .foregroundStyle(.white)
                     .padding()
-                    .background(Color.yellow)
+                    .background(Color.blue)
                     .clipShape(RoundedRectangle(cornerRadius: 16))
             }
             
             Spacer()
             
-        }.fullScreenCover(isPresented: $isPresented, onDismiss: {isPresented = false}, content: {
+        }
+        .background(Color("backgroundColor"))
+        .fullScreenCover(isPresented: $isPresented, onDismiss: {isPresented = false}, content: {
             NavigationView {
                 if viewModel.isLoading {
                     CustomProgressView()
