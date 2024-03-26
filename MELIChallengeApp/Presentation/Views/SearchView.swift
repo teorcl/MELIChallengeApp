@@ -19,7 +19,9 @@ struct SearchView: View {
     
     var body: some View {
         VStack {
-            TextField("Ingrese una URL", text: $searchText)
+            Spacer()
+            
+            TextField("Producto", text: $searchText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
             
@@ -36,8 +38,17 @@ struct SearchView: View {
             
             
             Spacer()
+            
+            
         }.fullScreenCover(isPresented: $isPresented, onDismiss: {isPresented = false}, content: {
             NavigationView {
+                if viewModel.isLoading {
+                    ProgressView()
+                        .controlSize(.extraLarge)
+                        .progressViewStyle(CircularProgressViewStyle(tint: .yellow))
+                        .padding()
+                        .background(Color.white.opacity(0.7))
+                }
                 List {
                     ForEach(viewModel.productsPresentable, id: \.title) {productRepresentable in
                         
@@ -52,6 +63,7 @@ struct SearchView: View {
                         Button {
                             isPresented = false
                             searchText = ""
+                            viewModel.refreshProductList()
                         } label: {
                             Label("Volver", systemImage: "chevron.backward")
                         }

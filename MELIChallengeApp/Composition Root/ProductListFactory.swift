@@ -15,7 +15,8 @@ class ProductListFactory {
     private static func createViewModel() -> ProductViewModel {
         return ProductViewModel(
             getProductsUseCase: createUseCase(),
-            getProductDetailUseCase: createGetProductDetailUseCase()
+            getProductDetailUseCase: createGetProductDetailUseCase(),
+            errorMapper: ProductPresentableErrorMapper()
         )
     }
     
