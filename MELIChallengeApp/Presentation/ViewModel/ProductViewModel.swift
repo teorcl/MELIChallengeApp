@@ -10,21 +10,17 @@ import Foundation
 class ProductViewModel: ObservableObject {
     
     private let getProductsUseCase: GetProductListProtocol
-    private let getProductDetailUseCase: GetProductDetailProtocol
     private let errorMapper: ProductPresentableErrorMapper
     @Published var productsPresentable: [ProductListPresentableItem] = []
-    @Published var productDetailPresentable: ProductDetailPresentable?
     @Published var showAlert: Bool = false
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     
     init(
         getProductsUseCase: GetProductListProtocol,
-        getProductDetailUseCase: GetProductDetailProtocol,
         errorMapper: ProductPresentableErrorMapper
     ){
         self.getProductsUseCase = getProductsUseCase
-        self.getProductDetailUseCase = getProductDetailUseCase
         self.errorMapper = errorMapper
     }
     
@@ -46,22 +42,6 @@ class ProductViewModel: ObservableObject {
             }
         }
         
-    }
-    
-    func fetchProduct(id: String) {
-        Task {
-            let result = await self.getProductDetailUseCase.byId(id)
-            guard case .success(let productDetailObtained) = result else {
-                handleError(error: result.failureValue as? ProductDomainError)
-                return
-            }
-        
-            
-            Task { @MainActor in
-                isLoading = false
-                productDetailPresentable = ProductDetailPresentable(domainModel: productDetailObtained)
-            }
-        }
     }
     
     func refreshProductList(){

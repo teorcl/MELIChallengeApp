@@ -12,6 +12,7 @@ struct SearchView: View {
     @State private var searchText = ""
     @State private var showingPopup = false
     @State var isPresented: Bool = false
+    @ObservedObject  var productDetailViewModel = ProductDetailFactory.createViewModel()
     
     init(viewModel: ProductViewModel) {
         self.viewModel = viewModel
@@ -47,10 +48,10 @@ struct SearchView: View {
                 List {
                     ForEach(viewModel.productsPresentable, id: \.title) { productRepresentable in
                         
-                        NavigationLink(destination: ProductDetailView(product: productRepresentable, viewModel: self.viewModel)){
+                        NavigationLink(destination: ProductDetailView(productId: productRepresentable.id, viewModel: productDetailViewModel)){
                             RowView(product: productRepresentable)
                         }.onAppear(){
-                            viewModel.fetchProduct(id: productRepresentable.id)
+                            productDetailViewModel.fetchProduct(id: productRepresentable.id)
                         }
                     }
                 }.toolbar{

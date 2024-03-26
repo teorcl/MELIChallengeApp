@@ -10,8 +10,8 @@ import Kingfisher
 
 struct ProductDetailView: View {
     
-    let product: ProductListPresentableItem
-    @ObservedObject  var viewModel: ProductViewModel
+    let productId: String
+    @ObservedObject  var viewModel: ProductDetailViewModel
     
     var body: some View {
         let screenHeight = UIScreen.main.bounds.height
@@ -28,7 +28,7 @@ struct ProductDetailView: View {
                 Text("Condición: \(viewModel.productDetailPresentable!.condition)")
                 Text("Estado: \(viewModel.productDetailPresentable!.status)")
                 Spacer()
-            }.navigationBarTitle(Text(product.title), displayMode: .inline)
+            }.navigationBarTitle(Text("Detalle del producto"), displayMode: .inline)
                 
         }.padding(10)
         

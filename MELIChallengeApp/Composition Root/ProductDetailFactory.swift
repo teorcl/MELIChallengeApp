@@ -1,20 +1,17 @@
 //
-//  ProductListFactory.swift
+//  ProductDetailFactory.swift
 //  MELIChallengeApp
 //
-//  Created by Teodoro Calle Lara on 24/03/24.
+//  Created by Teodoro Calle Lara on 26/03/24.
 //
 
 import Foundation
-class ProductListFactory {
+
+class ProductDetailFactory {
     
-    static func createSearchView() -> SearchView {
-        return SearchView(viewModel: createViewModel())
-    }
-    
-    private static func createViewModel() -> ProductViewModel {
-        return ProductViewModel(
-            getProductsUseCase: createUseCase(),
+    static func createViewModel() -> ProductDetailViewModel {
+        return ProductDetailViewModel(
+            getProductDetailUseCase: createGetProductDetailUseCase(),
             errorMapper: ProductPresentableErrorMapper()
         )
     }
@@ -45,4 +42,5 @@ class ProductListFactory {
             
         )
     }
+    
 }
