@@ -138,6 +138,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		84A32CEB2BB327B8001D6416 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		84A32CEC2BB327C0001D6416 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
 		84B5579D2BB259D7004A63E0 /* Builder */ = {
 			isa = PBXGroup;
 			children = (
@@ -247,6 +261,8 @@
 		84BEB73E2BADE79B00E6D05D /* MELIChallengeAppTests */ = {
 			isa = PBXGroup;
 			children = (
+				84A32CEC2BB327C0001D6416 /* Domain */,
+				84A32CEB2BB327B8001D6416 /* Data */,
 				84BEB73F2BADE79B00E6D05D /* MELIChallengeAppTests.swift */,
 			);
 			path = MELIChallengeAppTests;
